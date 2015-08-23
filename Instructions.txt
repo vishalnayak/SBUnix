@@ -1,0 +1,35 @@
+This was an awesome OS course taught by Prof. Mike Ferdman at Stony Brook University - Spring 2015.
+
+Instructions:
+
+Warmup 1:
+Support changing current directory ( cd )
+Execute binaries interactively
+Execute scripts
+Execute pipelines of binaries ( /bin/ls | /bin/grep test )
+Set and use PATH and PS1 variables
+Implement a standard library – sblibc, must be able to …
+Provide all functionality needed by your sbush
+Implement all functions from include/stdlib.h (you probably want to implement bin/ls and bin/cat to test them)
+Rely on 64-bit Linux syscall numbers and conventions
+
+Warmup 2:
+Must support at least %c, %d, %x, %s, %p
+Should write to the console (For fun, you can also support writing to the serial port)
+You get: (“hardware”, a boot loader, a Makefile)
+Keep track of time since boot
+Display time since boot in lower-right corner
+For fun, you can also read RTC to show real-world time
+React to key presses
+Display the last pressed glyph next to the clock
+Don’t forget to handle the Shfit key
+For fun, include handling for Control characters (show as ^C)
+ 
+Project:
+Functional Requirements:
+All functions from include/stdlib.h should work
+Virtual Memory/Ring-3 Processes (COW fork(), auto-growing stack, SEGV handling)
+TARFS: open, read, close, opendir, readdir, closedir
+stdin, stdout, stderr: read() and write()
+Binaries: ls, echo, sleep, kill -9, ps
+Shell with PATH, ‘cd’, and ‘&’ available (exec for ELF and #!)

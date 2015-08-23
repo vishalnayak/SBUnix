@@ -1,0 +1,115 @@
+Team Size: 1
+Vishal Nayak
+SBU-ID: 
+Email:
+Project type: Premptive OS for 70 points
+Scored: 64
+--------------
+Commands Supported: clear,exit,ls,ps,cat,echo,kill -9,pwd,cd,sleep,sbush,export.
+Features: COW Fork. Auto-growing stack. SEGV handling. Shell with PATH,cd and '&'. Exec for ELF and '#!'.
+--------------
+INSTRUCTIONS:
+1) A 'space' is required before '&' for background process
+2) Handling of '&' is done in shell. Use the integrated shell to test this feature.
+3) Pid 0 and Pid 1 cannot be killed
+4) 'cat' command is terminated by ^c
+5) Refer to the commands below. They are all working.
+6) All the functional requirements of 70 point project are satisfied.
+--------------
+SAMPLE WORKING COMMANDS:
+exit
+clear
+ps
+kill -9 <pid>
+pwd
+ls
+ls &
+sleep 2 
+sleep 2 &
+cat samplefile
+cat samplefile &
+cd bin
+    cat ../samplefile
+    cd ..
+cat
+    helloworld
+    testing text
+    ^c
+cat script.sh
+sbush script.sh
+sbush script.sh &
+ls | cat
+echo hi
+echo "hello world"
+echo $PATH
+echo $PS1
+cd bin
+cd ..
+cd .
+cd /
+cd ././././../../../bin/../mnt/../lib/../././bin
+ps
+ls | cat | cat | cat
+ps | cat
+ps | cat | cat | cat
+export PS1=[cse506]
+export PATH=/bin:/
+export PATH=/:/bin
+sbush
+    exit
+===============================================================================
+------------
+Warmup README
+------------
+Disclaimers:
+1) Do not use double quotes while setting PATH and PS1 variables.
+GOOD: $ export PATH=/usr/bin:/bin
+BAD:  $ export PATH="/usr/bin:/bin"
+
+GOOD: $ export PS1=sbush:Test
+BAD:  $ export PS1="sbush:Test"
+
+2) Do not use space/tabs while setting PS1 variables.
+GOOD: $ export PS1=sbush:Testing_$_
+BAD:  $ export PS1=sbush:Testing $
+
+3) Support pipeline upto 4 stages.(5 commands, 4 pipes)
+If the command is bigger than that, the result of the first 5 will be displayed.
+------------
+
+Example commands:
+cd <directory_name>
+cat <filename>
+cd ..
+/bin/ls
+/bin/ls -l
+/bin/ls -l | /bin/grep bin
+ls -l | grep bin | wc | wc | wc
+export PATH=/bin:/usr/bin
+export PS1=sbu_new_prompt_$
+
+
+The provided Makefile:
+  1) builds a kernel
+  2) copies it into rootfs/boot/kernel/kernel
+  3) creates an ISO CD image with the rootfs/ contents
+
+To boot the system in QEMU, run:
+  qemu-system-x86_64 -curses -cdrom $USER.iso -drive id=disk,file=$USER.img,if=none -device ahci,id=ahci -device ide-drive,drive=disk,bus=ahci.0 -net nic -net user,hostfwd=tcp::10080-:80 -net user,hostfwd=tcp::10023-:23 --no-reboot -gdb tcp::9998
+
+  Explanation of parameters:
+  -curses         use a text console (omit this to use default SDL/VNC console)
+  -cdrom x.iso    connect a CD-ROM and insert CD with x.iso disk
+  --no-reboot     exit when guest reboots
+  -gdb tcp::9998  listen for "remote" debugging connections on port 9998
+
+  connect a hard drive with x.img disk:
+  -drive id=disk,file=$USER.img,if=none -device ahci,id=ahci -device ide-drive,drive=disk,bus=ahci.0
+  connect a NIC and forward local port 10080 into port 80 and local port 10023 to port 23
+  -net nic -net user,hostfwd=tcp::10080-:80 -net user,hostfwd=tcp::10023-:23
+
+When using the -curses mode, switch to the qemu> console with ESC-2.
+
+To connect a remote debugger to the running qemu VM:
+  gdb ./kernel
+  target remote localhost:9998
